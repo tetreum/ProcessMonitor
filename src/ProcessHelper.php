@@ -78,7 +78,7 @@ class ProcessHelper
     {
         $defunct = false;
 
-        preg_match("/([A-Za-z0-9_\-.]*)\s*([0-9]*)\s*([0-9.]*)\s*([0-9.]*)\s*([0-9]*)\s*([0-9]*)\s*([A-Za-z0-9_\-.\?\/]*)\s*([A-Za-z_\-.\+\-]*)\s*([A-Za-z0-9\:]*)\s*([0-9\:]*)\s*(.*)/", $line, $matches);
+        preg_match("/([A-Za-z0-9_\-.\+]*)\s*([0-9]*)\s*([0-9.]*)\s*([0-9.]*)\s*([0-9]*)\s*([0-9]*)\s*([A-Za-z0-9_\-.\?\/]*)\s*([A-Za-z_\-.\+\-]*)\s*([A-Za-z0-9\:]*)\s*([0-9\:]*)\s*(.*)/", $line, $matches);
         //echo $line;p($matches);
         if (strpos($line, "<defunct>") !== false) {
             $defunct = true;

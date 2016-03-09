@@ -38,7 +38,7 @@ class Process extends ProcessHelper
         }
 
         if (empty($this->pid) || empty($this->command)) {
-            throw new Exception("Missing process id or command");
+            throw new \Exception("Missing process id or command");
         }
     }
 

@@ -1,5 +1,5 @@
 {
-    "name": "tetreum/ProcessMonitor",
+    "name": "tetreum/process-monitor",
     "description": "A system process monitor & manager for PHP",
     "keywords": ["process","monitor"],
     "license": "MIT",

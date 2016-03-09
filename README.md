@@ -4,7 +4,7 @@ Monitor & manage system processes in PHP.
 
 #### Install
 
-    composer require tetreum/ProcessMonitor "1.*"
+    composer require tetreum/process-monitor "1.*"
 
 
 #### Examples

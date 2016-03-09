@@ -1,0 +1,11 @@
+{
+    "name": "tetreum/ProcessMonitor",
+    "description": "A system process monitor & manager for PHP",
+    "keywords": ["process","monitor"]
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ProcessMonitor\\": "src/"
+        }
+    }
+}

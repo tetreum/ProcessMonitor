@@ -106,7 +106,7 @@ class ProcessMonitor extends ProcessHelper
 
 
         if ($appendSummary) {
-            $response = new stdClass();
+            $response = new \stdClass();
             $response->processes = $list;
             $response->summary = array(
                 'cpu' => $higherCpu,

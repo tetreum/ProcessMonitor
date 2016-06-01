@@ -1,4 +1,4 @@
-# ProcessMonitor
+# ProcessMonitor [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![Issues](https://img.shields.io/github/issues/tetreum/ProcessMonitor.svg?style=flat)](https://github.com/tetreum/ProcessMonitor/issues)
 
 Monitor & manage system processes in PHP.
 

@@ -2,40 +2,19 @@
 
 namespace ProcessMonitor;
 
-class ProcessMonitor extends ProcessHelper
+class ProcessMonitor extends PlatformHelper
 {
-    public function __construct ($debug = false) {
+    private $driver;
+
+    public function __construct($debug = false)
+    {
         $this->debug = (bool)$debug;
-    }
 
-    /**
-     * if debug mode is enabled, Prints the given line
-     * @param string $line
-     */
-    protected function display ($line)
-    {
-        if (!$this->debug) {
-            return;
+        if ($this->isWindows()) {
+            $this->driver = new Windows($this->debug);
+        } else {
+            $this->driver = new Linux($this->debug);
         }
-        parent::display($line);
-    }
-
-
-
-    /**
-     * Checks if given string may be a regex
-     * @param string $str
-     * @return bool
-     */
-    private function isRegex ($str)
-    {
-        preg_match("/([|%\/]+)/", $str, $matches);
-
-        if (sizeof($matches) == 0) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -43,11 +22,9 @@ class ProcessMonitor extends ProcessHelper
      * @param int|string $id (you can set 4 or 4|345|45)
      * @return Process
      */
-    public function get ($id)
+    public function get($id)
     {
-        $out = $this->runCommand("ps u -p $id");
-
-        return $this->parseProcessData($out[0]);
+        return $this->driver->get($id);
     }
 
     /**
@@ -55,14 +32,13 @@ class ProcessMonitor extends ProcessHelper
      * @param string $processName
      * @return bool|Process
      */
-    public function search ($processName)
+    public function search($processName)
     {
         $result = $this->searchMultiple($processName);
 
         if (!$result) {
             return false;
         }
-
 
         return $result[0];
     }
@@ -71,50 +47,39 @@ class ProcessMonitor extends ProcessHelper
      * Gets multiple processes by name, regex accepted
      * @param string $processName
      * @param bool|false $appendSummary
-     * @return array|bool|stdClass
+     * @return array|bool|\stdClass
      */
-    public function searchMultiple ($processName, $appendSummary = false)
+    public function searchMultiple($processName, $appendSummary = false)
     {
-        $higherCpu = 0;
-        $defunct = false;
-        $grep = "grep ";
-        $list = array();
+        $processes = $this->driver->searchMultiple($processName);
 
-        if ($this->isRegex($processName)) {
-            $grep .= "-E ";
-        }
-
-        $out = $this->runCommand("ps faux | $grep '$processName'");
-
-        foreach ($out as $k => $line)
-        {
-            $proc = $this->parseProcessData($line);
-
-            if (!$higherCpu || ($proc->cpu > $higherCpu->cpu)) {
-                $higherCpu = $proc;
-            }
-            if ($proc->defunct) {
-                $defunct = true;
-                break;
-            }
-            $list[] = $proc;
-        }
-
-        if (sizeof($list) == 0) {
+        if (sizeof($processes) == 0) {
             return false;
         }
 
-
         if ($appendSummary) {
+            $higherCpu = null;
+            $defunct = false;
+
+            foreach ($processes as $proc) {
+                if (!$higherCpu || ($proc->cpu > $higherCpu->cpu)) {
+                    $higherCpu = $proc;
+                }
+                if ($proc->defunct) {
+                    $defunct = true;
+                    break;
+                }
+            }
+
             $response = new \stdClass();
-            $response->processes = $list;
+            $response->processes = $processes;
             $response->summary = array(
                 'cpu' => $higherCpu,
                 'defunct' => $defunct
             );
             return $response;
         } else {
-            return $list;
+            return $processes;
         }
     }
 

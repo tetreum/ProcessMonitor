@@ -1,6 +1,6 @@
 # ProcessMonitor [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![Issues](https://img.shields.io/github/issues/tetreum/ProcessMonitor.svg?style=flat)](https://github.com/tetreum/ProcessMonitor/issues)
 
-Monitor & manage system processes in PHP.
+Monitor & manage system processes in PHP for Linux & Windows(basic support).
 
 #### Install
 
@@ -89,3 +89,16 @@ $result = $monitor->searchMultiple("rust-server|nginx", true);
         )
 */
 ```
+
+## Troubleshooting
+
+- I get a "Fatal error:  Class 'COM' not found" in Windows:
+
+In `php.ini` add:
+```
+[PHP_COM_DOTNET]
+extension=php_com_dotnet.dll
+```
+- I don't know where my php.ini file is:
+
+`php --ini`

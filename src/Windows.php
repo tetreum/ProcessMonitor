@@ -6,7 +6,7 @@ namespace ProcessMonitor;
 "Useful" documentation: https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-process
 */
 
-class Windows extends ProcessHelper implements PlatformInterface
+class Windows extends PlatformHelper implements PlatformInterface
 {
 
     private $wmi = null;
@@ -111,7 +111,7 @@ class Windows extends ProcessHelper implements PlatformInterface
             'start' => 0,
             'time' => 0,
             'defunct' => false,
-            'debug' => $this->debug
+            'driver' => $this
         ]);
     }
 }

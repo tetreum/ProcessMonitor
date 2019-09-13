@@ -2,7 +2,7 @@
 
 namespace ProcessMonitor;
 
-class ProcessMonitor extends ProcessHelper
+class ProcessMonitor extends PlatformHelper
 {
     private $driver;
 

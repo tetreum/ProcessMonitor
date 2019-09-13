@@ -2,7 +2,7 @@
 
 namespace ProcessMonitor;
 
-class Process extends ProcessHelper
+class Process
 {
     public $user;
     public $pid;

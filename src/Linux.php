@@ -2,7 +2,7 @@
 
 namespace ProcessMonitor;
 
-class Linux extends ProcessHelper implements PlatformInterface
+class Linux extends PlatformHelper implements PlatformInterface
 {
 
     public function __construct($debug = false)
@@ -134,7 +134,7 @@ class Linux extends ProcessHelper implements PlatformInterface
             'time' => $matches[10],
             'command' => $matches[11],
             'defunct' => $defunct,
-            'debug' => $this->debug
+            'driver' => $this
         ));
     }
 

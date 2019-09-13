@@ -17,7 +17,12 @@ class Process extends ProcessHelper
     public $command;
     public $defunct;
 
-    public function __construct ($info)
+    /**
+     * @var PlatformInterface
+     */
+    private $driver;
+
+    public function __construct($info)
     {
         $this->user = $info["user"];
         $this->pid = (int)$info["pid"];
@@ -45,8 +50,9 @@ class Process extends ProcessHelper
     /**
      * Kills this process
      */
-    public function kill () {
-        $this->runCommand("kill " . $this->pid);
+    public function kill()
+    {
+        $this->driver->kill($this->pid);
     }
 
     /**
@@ -54,39 +60,20 @@ class Process extends ProcessHelper
      *
      * @return array
      */
-    public function getChilds ()
+    public function getChilds()
     {
-        $out = $this->runCommand("ps u --ppid " . $this->pid);
-        $processList = array();
-
-        foreach ($out as $k => $line) {
-            $processList[] = $this->parseProcessData($line);
-        }
-
-        return $processList;
+        return $this->driver->getChilds($this->pid);
     }
 
     /**
-     * Kills al process childs
+     * Kills all process childs
      */
-    public function killChilds ()
+    public function killChilds()
     {
         $childs = $this->getChilds();
 
         foreach ($childs as $child) {
             $child->kill();
         }
-    }
-
-    /**
-     * if debug mode is enabled, Prints the given line
-     * @param string $line
-     */
-    protected function display ($line)
-    {
-        if (!$this->debug) {
-            return;
-        }
-        parent::display($line);
     }
 }

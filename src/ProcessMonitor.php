@@ -24,12 +24,10 @@ class ProcessMonitor extends PlatformHelper
      */
     public function get($id)
     {
-        if($this->exists($id)){
-            return $this->driver->get($id);
-        }
-        else{
+        if (!$this->exists($id)) {
             return false;
         }
+        return $this->driver->get($id);
     }
     
     /**

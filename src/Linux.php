@@ -30,7 +30,7 @@ class Linux extends PlatformHelper implements PlatformInterface
     public function exists($id)
     {
         $out = $this->runCommand("ps u -p ". intval($id));
-        return (is_array($out) && count($out) > 0) ? true : false;
+        return (is_array($out) && count($out) > 0);
     }
 
     /**

@@ -23,6 +23,17 @@ class Linux extends PlatformHelper implements PlatformInterface
     }
 
     /**
+     * Check whether the process identified by ID exists.
+     * @param int
+     * @return bool
+     */
+    public function exists($id)
+    {
+        $out = $this->runCommand("ps u -p ". intval($id));
+        return (is_array($out) && count($out)>0) ? true : false;
+    }
+
+    /**
      * Gets multiple processes by name, regex accepted
      * @param string $processName
      * @return array|bool

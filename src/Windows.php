@@ -34,6 +34,18 @@ class Windows extends PlatformHelper implements PlatformInterface
     }
 
     /**
+     * Check whether the process identified by ID exists.
+     * @param int
+     * @return bool
+     */
+    public function exists($id)
+    {
+        $processes = $this->runCommand("SELECT * FROM Win32_Process WHERE ProcessId = " . intval($id));
+
+        return (is_array($processes) && count($processes) > 0);
+    }
+
+    /**
      * Kills this process
      */
     public function kill($pid)

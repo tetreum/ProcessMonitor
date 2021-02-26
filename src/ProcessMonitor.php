@@ -20,11 +20,24 @@ class ProcessMonitor extends PlatformHelper
     /**
      * Gets process info by id
      * @param int|string $id (you can set 4 or 4|345|45)
-     * @return Process
+     * @return Process|false
      */
     public function get($id)
     {
+        if (!$this->exists($id)) {
+            return false;
+        }
         return $this->driver->get($id);
+    }
+    
+    /**
+     * Check whether the process identified by ID exists.
+     * @param int
+     * @return bool
+     */
+    public function exists($id)
+    {
+        return $this->driver->exists($id);
     }
 
     /**

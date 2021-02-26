@@ -42,7 +42,7 @@ class Windows extends PlatformHelper implements PlatformInterface
     {
         $processes = $this->runCommand("SELECT * FROM Win32_Process WHERE ProcessId = " . intval($id));
 
-        return (is_array($processes) && count($processes) > 0) ? true:false;
+        return (is_array($processes) && count($processes) > 0);
     }
 
     /**
